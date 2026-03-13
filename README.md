@@ -139,7 +139,7 @@ pnpm tsx src/index.ts
 [Getting Started with ESLint](https://eslint.org/docs/latest/use/getting-started)
 
 ```sh
-npm init @eslint/config@latest
+pnpm create @eslint/config@latest
 ```
 
 Siga o passo a passo, altamente intuitivo.  
@@ -153,8 +153,10 @@ No meu caso:
 4. None of these
 5. Does your project use TypeScript? ‣ no / **~~yes~~**
 6. ✔ Node
+7. TypeScript
+8 Jiti devDependency? **~~Yes~~**
 7. Would you like to install them now? ‣ No / **~~Yes~~**
-8. ▸ npm
+8. Choose ▸ **pnpm**
 
 2 - Instale a extensão do Eslint(caso não tenha ainda):
 
@@ -169,17 +171,16 @@ let test = 10
 ```
 
 Deve aparecer em PROBLEMS:  
-'test' is never reassigned. Use 'const' instead.  
 'test' is assigned a value but never used.
 
 4 - Compile:
 
 ```sh
-npm run compile
+pnpm run compile
 ```
 
-- Perceba que agora que também está apontando erro no arquivo index.js da pasta dist.  
-  Para corrigir crie uma regra **ignores: ["dist/*"]** no **defineConfig** em **eslint.config.mjs**:
+- Se estiver apontando erro no arquivo index.js da pasta dist
+  Para corrigir crie uma regra **ignores: ["dist/*"]** no **defineConfig** em **eslint.config.mts**:
 
 ```js
 // ...
@@ -195,12 +196,12 @@ export default defineConfig([
 
 - Nesse local (ignores:[...]) agora é possível adicionar mais pastas ou arquivos para serem ignorados pelo Eslint, caso necessário.
 - Funciona ainda adicionar um **.eslintignore**, mas está em classificado como **deprecated**, então melhor a solução nova, acima descrita.
-- Perceba que foi gerado na instalação o **eslint.config.mjs**, que é a versão mais nova do aquivo de configuração, pois os **.eslintrc.\*** , não são mais compatíveis.
+- Perceba que foi gerado na instalação o **eslint.config.mts**, que é a versão mais nova do aquivo de configuração, pois os **.eslintrc.\*** , não são mais compatíveis.
 
 Compile novamente ou altere qquer coisa no index.js e salve e veja que agora ele está ignorando essa pasta.
 
 5 - Quanto aos erros **'test' is assigned a value but never used.** etc, prefiro que seja apenas um alerta e não um erro.  
-Para alterar isso, devemos criar uma sessão de regras no **eslint.config.mjs** criado durante a instalação do Eslint
+Para alterar isso, devemos criar uma sessão de regras no **eslint.config.mts** criado durante a instalação do Eslint
 
 - Note que os erros foram seguidos dos links para documentação das regras:  
   https://eslint.org/docs/latest/rules/prefer-const  
@@ -229,23 +230,28 @@ export default defineConfig([
 
 6 - Vamos testar se "pegou" a configuração:
 
-Troque o const por let no index.ts:
+Troque por por const no index.ts:
 
 ```js
-let test = 10
-```
-
-O alerta: 'test' is never reassigned. Use 'const' instead, deve desaparecer.
-
-Depois de let test = 10, adicione:
-
-```js
+const test = 10
 test = 4
 ```
 
-E então:
+Deve aparecer 2 problems:  
+Cannot assign to 'test' because it is a constant.
+'test' is assigned a value but never used.
+
+Altere para let: 
 
 ```js
+let test = 10
+test = 4
+```
+
+E então altere para:
+
+```js
+const test = 10
 console.log(test)
 ```
 
@@ -255,15 +261,15 @@ O alerta: 'test' is assigned a value but never used, deve desaparecer.
 
 ```json
 "scripts": {
-  "lint": "eslint . --ext .ts",
-  "lint:fix": "eslint . --ext .ts --fix"
+  "lint": "eslint src --ext .ts",
+  "lint:fix": "eslint src --ext .ts --fix",
 }
 ```
 
 8 - Para testar, experimente deixar novamente somente o let test = 10; no index.ts para voltar os erros e execute:
 
 ```sh
-npm run lint
+pnpm run lint
 ```
 
 Veja os dois erros, agora no terminal
@@ -271,7 +277,7 @@ Veja os dois erros, agora no terminal
 Para que ele tente corrigir:
 
 ```sh
-npm run lint:fix
+pnpm run lint:fix
 ```
 
 Perceba que ele trocou o let por const:
@@ -305,6 +311,27 @@ alert('foo')
 
 Veja mais na documentação:  
 [Configure Rules](https://eslint.org/docs/latest/use/configure/rules)
+
+9 - Para evitar que ocorra algum erro do tipo:  
+Parsing error: No tsconfigRootDir was set... etc  
+
+Adicione no **eslint.config.mts** também a node_modules no ignore, ficando assim:
+
+```js
+{ ignores: ['dist/*', "node_modules/*"] },
+```
+
+E no depois do objeto compilerOptions no **tsconfig.json**, adicione:
+
+```js	
+  //  existing code
+ 	"skipLibCheck": true,
+  }
+  // ...
+  ,
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "node_modules"],
+```
 
 ---
 
