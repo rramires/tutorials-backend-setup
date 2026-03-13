@@ -25,7 +25,11 @@ Atualmente, retornou:
 pnpm init
 ```
 
-Acesse o **package.json** e configure nome do projeto, versão, etc
+Acesse o **package.json** e configure nome do projeto, versão, etc e adicione:
+
+```json
+"type": "module",
+```
 
 ### Instalação e configuração do TypeScript
 
@@ -184,7 +188,7 @@ pnpm run compile
 - Se estiver apontando erro no arquivo index.js da pasta dist
   Para corrigir crie uma regra **ignores: ["dist/*"]** no **defineConfig** em **eslint.config.mts**:
 
-```typescript
+```ts
 // ...
 export default defineConfig([
 	// Adicionar aqui
@@ -493,3 +497,44 @@ export default defineConfig([
 	eslintConfigPrettier,
 ])
 ```
+
+### Organizando as importações.
+
+- Um excelente plugin para organizar os imports e exports é esse:  
+  [Simple import sort](https://github.com/lydell/eslint-plugin-simple-import-sort)
+
+1 - Instale
+
+```sh
+pnpm add -D eslint-plugin-simple-import-sort
+```
+
+2 - No arquivo de configuração do Eslint **eslint.config.mts**, importe, adicione como plugin e adicione as regras:
+
+```js
+// Importe
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
+
+// adicione nos plugins
+/* plugins: { js, */ 'simple-import-sort': simpleImportSort /* }, */
+
+/* rules: {
+	'prefer-const': 'warn',
+	'no-unused-vars': 'off',
+	'@typescript-eslint/no-unused-vars': 'warn', */
+	'simple-import-sort/imports': 'error',
+	/* 'simple-import-sort/exports': 'error', */
+/* }, */
+```
+
+3 - Adicione esses imports na **index.ts** somente para testar:
+
+```ts
+import os from 'node:os'
+import path from 'node:path'
+import fs from 'node:fs'
+```
+
+- Devem ficar sublinhados com erro, por não estarem em ordem alfabética.  
+  Ao salvar, eles se organizam indicando que a instalação está OK, permanecendo apenas os warnings de não estarem sendo utilizados.  
+  Após testar pode apagar os imports.

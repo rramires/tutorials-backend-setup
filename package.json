@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "compile": "tsc",
@@ -22,6 +23,7 @@
     "@types/node": "^25.5.0",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^17.4.0",
     "jiti": "^2.6.1",
     "prettier": "3.8.1",
