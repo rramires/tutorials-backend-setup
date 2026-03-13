@@ -7,9 +7,11 @@
     "dev": "tsx watch src/index.ts",
     "compile": "tsc",
     "start": "node dist/index.js",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --ext .ts --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "prettier --check \"src/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\""
   },
   "keywords": [],
   "author": "",
@@ -19,8 +21,10 @@
     "@eslint/js": "^10.0.1",
     "@types/node": "^25.5.0",
     "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
     "globals": "^17.4.0",
     "jiti": "^2.6.1",
+    "prettier": "3.8.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.0"

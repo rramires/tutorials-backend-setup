@@ -4,7 +4,9 @@
 
 ### Instalação do **pnpm** para agilizar a instalação de dependências
 
-1 - Instale o **pnpm**:
+[PNPM Docs](https://pnpm.io/pt/installation)
+
+1 - Instale o **pnpm** de modo global, caso não tenha ainda:
 
 ```sh
 npm i -g pnpm@latest-10
@@ -17,10 +19,10 @@ pnpm -v
 Atualmente, retornou:  
 10.32.1
 
-3 - Inicialize um novo projeto:
+2 - Inicialize um novo projeto:
 
 ```sh
-pnpm init 
+pnpm init
 ```
 
 Acesse o **package.json** e configure nome do projeto, versão, etc
@@ -56,7 +58,7 @@ No **tsconfig.json** modifique:
 }
 ```
 
-5 - Crie a pasta **src** e **index.ts** dentro com um simples console.log:
+4 - Crie a pasta **src** e **index.ts** dentro com um simples console.log:
 
 ```js
 const lang = 'TypeScript'
@@ -64,7 +66,7 @@ const lang = 'TypeScript'
 console.log(`Hello World from ${lang}!`)
 ```
 
-6 - Adicione a pasta **src** no **tsconfig.json** em **rootDirs** e em **outDir** adicione **dist**:
+5 - Adicione a pasta **src** no **tsconfig.json** em **rootDirs** e em **outDir** adicione **dist**:
 
 ```json
 "rootDirs": [
@@ -73,13 +75,13 @@ console.log(`Hello World from ${lang}!`)
 "outDir": "./dist",
 ```
 
-7 - Instale o TSX para rodar e monitorar as alterações:
+6 - Instale o TSX para rodar e monitorar as alterações:
 
 ```sh
 pnpm add tsx -D
 ```
 
-8 - Na parte de **scripts** do **package.json** adicione:
+7 - Na parte de **scripts** do **package.json** adicione:
 
 ```js
 // "scripts": {
@@ -89,7 +91,7 @@ pnpm add tsx -D
 //}
 ```
 
-9 - Execute no modo de desenvolvimento:
+8 - Execute no modo de desenvolvimento:
 
 ```sh
 pnpm run dev
@@ -98,7 +100,7 @@ pnpm run dev
 Deve sair no console:  
 **Hello World from TypeScript!**
 
-10 - Compile:
+9 - Compile:
 
 ```sh
 pnpm run compile
@@ -106,7 +108,7 @@ pnpm run compile
 
 Deve criar a pasta **dist** com **index.js** dentro
 
-11 - Execute no modo de produção:
+10 - Execute no modo de produção:
 
 ```sh
 pnpm start
@@ -115,7 +117,7 @@ pnpm start
 Deve sair no console:  
 **Hello World from TypeScript!** só que dessa vez rodando o .js da pasta dist
 
-12 - Crie um .gitignore contendo:
+11 - Crie um .gitignore contendo:
 
 ```ini
 # Node Modules
@@ -125,7 +127,7 @@ node_modules
 dist
 ```
 
-13 - Caso precise rodar um unico aquivo **.ts** via terminal use **pnpm tsx** arquivo.ts:
+12 - Caso precise rodar um unico aquivo **.ts** via terminal use **pnpm tsx** arquivo.ts:
 
 ```sh
 pnpm tsx src/index.ts
@@ -154,9 +156,9 @@ No meu caso:
 5. Does your project use TypeScript? ‣ no / **~~yes~~**
 6. ✔ Node
 7. TypeScript
-8 Jiti devDependency? **~~Yes~~**
-7. Would you like to install them now? ‣ No / **~~Yes~~**
-8. Choose ▸ **pnpm**
+   8 Jiti devDependency? **~~Yes~~**
+8. Would you like to install them now? ‣ No / **~~Yes~~**
+9. Choose ▸ **pnpm**
 
 2 - Instale a extensão do Eslint(caso não tenha ainda):
 
@@ -182,14 +184,21 @@ pnpm run compile
 - Se estiver apontando erro no arquivo index.js da pasta dist
   Para corrigir crie uma regra **ignores: ["dist/*"]** no **defineConfig** em **eslint.config.mts**:
 
-```js
+```typescript
 // ...
 export default defineConfig([
 	// Adicionar aqui
 	{ ignores: ['dist/*'] },
 	//
-	{ files: ['**/*.{js,mjs,cjs,ts}'], plugins: { js }, extends: ['js/recommended'] },
-	{ files: ['**/*.{js,mjs,cjs,ts}'], languageOptions: { globals: globals.node } },
+	{
+		files: ['**/*.{js,mjs,cjs,ts}'],
+		plugins: { js },
+		extends: ['js/recommended'],
+	},
+	{
+		files: ['**/*.{js,mjs,cjs,ts}'],
+		languageOptions: { globals: globals.node },
+	},
 	tseslint.configs.recommended,
 ])
 ```
@@ -213,8 +222,15 @@ que são justamente o nome das regras, então basta adicionar na seção **rules
 ```js
 // ...
 export default defineConfig([
-	{ files: ['**/*.{js,mjs,cjs,ts}'], plugins: { js }, extends: ['js/recommended'] },
-	{ files: ['**/*.{js,mjs,cjs,ts}'], languageOptions: { globals: globals.node } },
+	{
+		files: ['**/*.{js,mjs,cjs,ts}'],
+		plugins: { js },
+		extends: ['js/recommended'],
+	},
+	{
+		files: ['**/*.{js,mjs,cjs,ts}'],
+		languageOptions: { globals: globals.node },
+	},
 	tseslint.configs.recommended,
 	// Adicionar aqui, depois de recommended a sessão de regras:
 	{
@@ -230,7 +246,7 @@ export default defineConfig([
 
 6 - Vamos testar se "pegou" a configuração:
 
-Troque por por const no index.ts:
+Troque por const no index.ts:
 
 ```js
 const test = 10
@@ -241,7 +257,7 @@ Deve aparecer 2 problems:
 Cannot assign to 'test' because it is a constant.
 'test' is assigned a value but never used.
 
-Altere para let: 
+Altere para let:
 
 ```js
 let test = 10
@@ -261,8 +277,8 @@ O alerta: 'test' is assigned a value but never used, deve desaparecer.
 
 ```json
 "scripts": {
-  "lint": "eslint src --ext .ts",
-  "lint:fix": "eslint src --ext .ts --fix",
+  "lint": "eslint src",
+  "lint:fix": "eslint src --fix"
 }
 ```
 
@@ -313,7 +329,7 @@ Veja mais na documentação:
 [Configure Rules](https://eslint.org/docs/latest/use/configure/rules)
 
 9 - Para evitar que ocorra algum erro do tipo:  
-Parsing error: No tsconfigRootDir was set... etc  
+Parsing error: No tsconfigRootDir was set... etc
 
 Adicione no **eslint.config.mts** também a node_modules no ignore, ficando assim:
 
@@ -323,7 +339,7 @@ Adicione no **eslint.config.mts** também a node_modules no ignore, ficando assi
 
 E no depois do objeto compilerOptions no **tsconfig.json**, adicione:
 
-```js	
+```js
   //  existing code
  	"skipLibCheck": true,
   }
@@ -335,17 +351,17 @@ E no depois do objeto compilerOptions no **tsconfig.json**, adicione:
 
 ---
 
-### Instação e configuração do Prettier
+### Instalação e configuração do Prettier
 
 - Na versão mais nova do Eslint, não é mais papel dele verificar estilos. Se usa tab ou espaços para indentação, se tem ou não ponto e vírgula, aspas simples ou duplas, etc.  
   Por isso não tem mais as opções de escolher os modelos do Airbnb, Google, etc  
   Para isso, daqui pra frente devemos usar o Prettier para formatação do código.
 
 1 - Instale o Prettier:  
-[Installt Prettier](https://prettier.io/docs/install)
+[Install Prettier](https://prettier.io/docs/install)
 
 ```sh
-npm install --save-dev --save-exact prettier
+pnpm add --save-dev --save-exact prettier
 ```
 
 2 - Crie o arquivo de exclusão **.prettierignore** e adicione:  
@@ -356,7 +372,7 @@ npm install --save-dev --save-exact prettier
 dist
 ```
 
-3 - Crie o arquivo de configuração do Prettier, **.prettierrc.json** contendo:  
+3 - Crie o arquivo de configuração do Prettier, **prettier.config.mjs** contendo:  
 [Prettier Options](https://prettier.io/docs/options)
 
 - Minha configuração:  
@@ -369,17 +385,23 @@ dist
   **tabWidth=4** - Tab equvalente a 4 espaços  
   **arrowParens="always"** - Sempre usa parenteses nas Arrow Functions
 
-```json
-{
-	"printWidth": 100,
-	"endOfLine": "lf",
-	"singleQuote": true,
-	"quoteProps": "as-needed",
-	"semi": false,
-	"useTabs": true,
-	"tabWidth": 4,
-	"arrowParens": "always"
+```js
+/**
+ * @see https://prettier.io/docs/configuration
+ * @type {import("prettier").Config}
+ */
+const config = {
+	printWidth: 100,
+	endOfLine: 'lf',
+	singleQuote: true,
+	quoteProps: 'as-needed',
+	semi: false,
+	useTabs: true,
+	tabWidth: 4,
+	arrowParens: 'always',
 }
+
+export default config
 ```
 
 4 - Instale a extensão do Prettier(caso não tenha ainda):
@@ -415,13 +437,13 @@ Testando. Vá no **index.ts** e volte aspas duplas e ponto e vírgula.
 Verificar:
 
 ```sh
-npm run check
+pnpm run check
 ```
 
 Corrigir:
 
 ```sh
-npm run format
+pnpm run format
 ```
 
 ---
@@ -435,10 +457,10 @@ npm run format
 [Eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)
 
 ```sh
-npm i -D eslint-config-prettier
+pnpm add -D eslint-config-prettier
 ```
 
-2 - No arquivo de configuração do Eslint, importe e adicione por último o **eslintConfigPrettier**:
+2 - No arquivo de configuração do Eslint, importe e adicione por último o eslintConfigPrettier no **eslint.config.mts**:
 
 ```js
 import js from '@eslint/js'
@@ -450,8 +472,15 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default defineConfig([
 	{ ignores: ['dist/*'] },
-	{ files: ['**/*.{js,mjs,cjs,ts}'], plugins: { js }, extends: ['js/recommended'] },
-	{ files: ['**/*.{js,mjs,cjs,ts}'], languageOptions: { globals: globals.node } },
+	{
+		files: ['**/*.{js,mjs,cjs,ts}'],
+		plugins: { js },
+		extends: ['js/recommended'],
+	},
+	{
+		files: ['**/*.{js,mjs,cjs,ts}'],
+		languageOptions: { globals: globals.node },
+	},
 	tseslint.configs.recommended,
 	{
 		rules: {
