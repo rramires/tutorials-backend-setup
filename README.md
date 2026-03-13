@@ -1,42 +1,57 @@
-# eslint-prettier-for-typescript
+# eslint-prettier-for-typescript rev 03/26
 
 #### Eslint + Prettier setup without headaches and conflicts
 
+### Instalação do **pnpm** para agilizar a instalação de dependências
+
+1 - Instale o **pnpm**:
+
+```sh
+npm i -g pnpm@latest-10
+```
+
+```sh
+pnpm -v
+```
+
+Atualmente, retornou:  
+10.32.1
+
+3 - Inicialize um novo projeto:
+
+```sh
+pnpm init 
+```
+
+Acesse o **package.json** e configure nome do projeto, versão, etc
+
 ### Instalação e configuração do TypeScript
 
-- Caso já tenha feito isso, pule direto para a segunda parte, instalação do Eslint + Prettier
-
-1 - Inicialize um novo projeto:
+1 - Instale o TypeScript e os Types do Node:
 
 ```sh
-npm init -y
+pnpm add typescript @types/node -D
 ```
 
-2 - Instale o TypeScript e os Types do Node:
+2 - Inicialize o TypeScript
 
 ```sh
-npm install typescript @types/node -D
+pnpm tsc --init
 ```
 
-3 - Inicialize o TypeScript
-
-```sh
-npx tsc --init
-```
-
-4 - Acesse as configurações recomendadas para a versão do NodeJs instalada:  
+3 - Acesse as configurações recomendadas para a versão do NodeJs instalada:  
 [Node Target Mapping](https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping)
 
-Meu Node (node -v) atual v22.14.0, então a configuração é **Node 20**.
+Meu Node (node -v) atual v24.14.0, então a configuração é **Node 24**.
 No **tsconfig.json** modifique:
 
 ```json
 {
 	"compilerOptions": {
-		"lib": ["ES2023"],
-		"module": "node16",
-		"moduleResolution": "node16",
-		"target": "ES2023"
+		"lib": ["ES2024"],
+		"module": "nodenext",
+		"target": "ES2024",
+		"types": ["node"]
 	}
 }
 ```
@@ -55,18 +70,13 @@ console.log(`Hello World from ${lang}!`)
 "rootDirs": [
     "./src"
 ],
-```
-
-E também:
-
-```json
 "outDir": "./dist",
 ```
 
 7 - Instale o TSX para rodar e monitorar as alterações:
 
 ```sh
-npm install tsx -D
+pnpm add tsx -D
 ```
 
 8 - Na parte de **scripts** do **package.json** adicione:
@@ -74,15 +84,15 @@ npm install tsx -D
 ```js
 // "scripts": {
   "dev": "tsx watch src/index.ts",
-  "compile": "npx tsc",
-  "start": "node dist/index.js"
+  "compile": "tsc",
+  "start": "node dist/index.js",
 //}
 ```
 
 9 - Execute no modo de desenvolvimento:
 
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 Deve sair no console:  
@@ -91,7 +101,7 @@ Deve sair no console:
 10 - Compile:
 
 ```sh
-npm run compile
+pnpm run compile
 ```
 
 Deve criar a pasta **dist** com **index.js** dentro
@@ -99,7 +109,7 @@ Deve criar a pasta **dist** com **index.js** dentro
 11 - Execute no modo de produção:
 
 ```sh
-npm start
+pnpm start
 ```
 
 Deve sair no console:  
@@ -115,10 +125,10 @@ node_modules
 dist
 ```
 
-13 - Caso precise rodar um unico aquivo **.ts** via terminal use **npx tsx** arquivo.ts:
+13 - Caso precise rodar um unico aquivo **.ts** via terminal use **pnpm tsx** arquivo.ts:
 
 ```sh
-npx tsx src/index.ts
+pnpm tsx src/index.ts
 ```
 
 ---

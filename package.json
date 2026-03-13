@@ -1,37 +1,21 @@
 {
-  "name": "eslint-prettier",
+  "name": "tutorial-backend-setup",
   "version": "1.0.0",
-  "description": "Instação e configuração do TypeScript + Eslint + Prettier",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "compile": "npx tsc",
+    "compile": "tsc",
     "start": "node dist/index.js",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
-    "check": "prettier --check \"src/**/*.ts\"",
-    "format": "prettier --write \"src/**/*.ts\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rramires/eslint-prettier.git"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rramires/eslint-prettier/issues"
-  },
-  "homepage": "https://github.com/rramires/eslint-prettier#readme",
+  "packageManager": "pnpm@10.32.1",
   "devDependencies": {
-    "@eslint/js": "^9.26.0",
-    "@types/node": "^22.15.15",
-    "eslint": "^9.26.0",
-    "eslint-config-prettier": "^10.1.5",
-    "globals": "^16.1.0",
-    "prettier": "3.5.3",
-    "tsx": "^4.19.4",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.32.0"
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }
